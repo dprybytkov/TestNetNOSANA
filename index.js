@@ -1,23 +1,40 @@
-<!DOCTYPE html>
-<html lang="en">
+const ShippingStatus= artifacts.require("Shipping");
+contract('Shipping', () => {
 
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="css/style.css">
-    <title>Document</title>
-</head>
+  it("should return the status Pending", async ()=> {
+    // Instance of our deployed contract
+    const instance = await ShippingStatus.deployed();
+    // Checking the initial status in our contract
+    const status = await instance.Status();
+    // Checking if the status is initially Pending as set in the constructor
+    assert.equal(status, "Pending");
+  });
+it("should return the status Shipped", async ()=> {
+// Instance of our deployed contract
+    const instance = await ShippingStatus.deployed();
 
-<body>
+    // Calling the Shipped() function
+    await instance.Shipped();
 
-    <div id="out">111</div>
-    <h2 class="header">Hello</h2>
-    <p id="one">Lorem ipsum dolor sit amet consectetur, adipisicing elit. Beatae voluptas quae ullam? Corrupti ea
-        commodi, ullam
-        exercitationem saepe sequi, perspiciatis, facere tenetur nihil quidem nam accusantium consectetur ipsa impedit
-        excepturi.</p>
-    <script src='js/script.js'></script>
-</body>
+    // Checking the initial status in our contract
+    const status = await instance.Status();
 
-</html>
+    // Checking if the status is Shipped
+    assert.equal(status, "Shipped");
+  });
+
+    it("should return the status Delivered", async ()=> {
+
+    // Instance of our deployed contract
+    const instance = await ShippingStatus.deployed();
+
+    // Calling the Shipped() function
+    await instance.Delivered();
+
+    // Checking the initial status in our contract
+    const status = await instance.Status();
+
+    // Checking if the status is Delivered
+    assert.equal(status, "Delivered");
+  });
+});
